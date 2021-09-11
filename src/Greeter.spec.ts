@@ -18,11 +18,17 @@ describe('greet function test', () => {
     const name = null
     const result = sut.handle(name)
     expect(result).toBe('Hello, my friend.')
-  });
+  })
   it('should return an uppercased greeting when an uppercased name is passed', () => {
     const { sut } = makeSUT()
     const name = 'RAPHAEL'
     const result = sut.handle(name)
     expect(result).toBe('HELLO RAPHAEL!')
-  });
+  })
+  it('should return the two names in the greeting when an array of names is passed', () => {
+    const { sut } = makeSUT()
+    const names = ['Raphael', 'Regiane']
+    const result = sut.handle(names)
+    expect(result).toBe('Hello, Raphael and Regiane.')
+  })
 })
