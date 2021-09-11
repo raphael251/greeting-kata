@@ -19,5 +19,10 @@ describe('greet function test', () => {
     const result = sut.handle(name)
     expect(result).toBe('Hello, my friend.')
   });
+  it('should return an uppercased greeting when an uppercased name is passed', () => {
+    const { sut } = makeSUT()
+    const name = 'RAPHAEL'
+    const result = sut.handle(name)
+    expect(result).toBe('HELLO RAPHAEL!')
   });
 })
