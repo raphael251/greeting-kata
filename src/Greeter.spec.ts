@@ -37,4 +37,10 @@ describe('greet function test', () => {
     const result = sut.handle(names)
     expect(result).toBe('Hello, Raphael, Regiane and Maria.')
   })
+  it('should return the greetings for more than two names where one or more is uppercased when an array of names is passed', () => {
+    const { sut } = makeSUT()
+    const names = ['Raphael', 'REGIANE', 'Maria']
+    const result = sut.handle(names)
+    expect(result).toBe('Hello, Raphael and Maria. AND HELLO REGIANE!')
+  })
 })
