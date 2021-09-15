@@ -43,4 +43,10 @@ describe('greet function test', () => {
     const result = sut.handle(names)
     expect(result).toBe('Hello, Raphael and Maria. AND HELLO REGIANE!')
   })
+  it('should return the greetings for more than two names where to names are passed in the same string', () => {
+    const { sut } = makeSUT()
+    const names = ["Maria", "Raphael, Regiane"]
+    const result = sut.handle(names)
+    expect(result).toBe('Hello, Maria, Raphael and Regiane.')
+  })
 })
