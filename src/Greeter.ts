@@ -7,48 +7,48 @@ export class Greeter {
     if (typeof names === 'string') return `Hello, ${names}.`
 
     if (Array.isArray(names)) {
-      names = this.separateNamesWhenTheyAreInAnUniqueString(names)
+      const separatedNames: string[] = this.separateNamesIfNecessary(names)
       
-      const hasUppercasedName = names.filter(el => el === el.toUpperCase()).length > 0
-
-      if (hasUppercasedName) {
-        const uppercasedNames = names.filter(el => el === el.toUpperCase())
-        const normalNames = names.filter(el => el !== el.toUpperCase())
-
-        const normalNamesGreeting = this.handleNormalGreeting(normalNames)
-        const uppercasedNamesGreeting = this.handleUppercasedGreeting(uppercasedNames)
-        
-        return normalNamesGreeting.concat(uppercasedNamesGreeting)
+      const uppercasedNames = separatedNames.filter(el => el === el.toUpperCase())
+      const normalNames = separatedNames.filter(el => el !== el.toUpperCase())
+      
+      const capitalizedNamesGreeting = this.handleCapitalizedNamesGreeting(normalNames)
+      
+      if (uppercasedNames.length > 0) {
+        const uppercasedNamesGreeting = this.handleUppercasedNamesGreeting(uppercasedNames)
+        return capitalizedNamesGreeting.concat(uppercasedNamesGreeting)
       } else {
-        return this.handleNormalGreeting(names)
+        return capitalizedNamesGreeting
       }
     }
 
     throw new Error('The system is not prepared for this greeting')
   }
 
-  separateNamesWhenTheyAreInAnUniqueString(names: Array<string>): Array<string> {
-    const separatedNames = []
+  separateNamesIfNecessary(names: string[]): string[] {
+    const separatedNames: string[] = []
     for (const name of names) {
-      const escapeStringRegexp = new RegExp('^[\\]["](.+)[\\]["]$', 'gm')
-      const regExpResult = escapeStringRegexp.exec(name)
-      if (regExpResult !== null) {
-        separatedNames.push(regExpResult[1])
+      // escaped name example: \"Name1 , Name2\"
+      const hasEscapedName = new RegExp('^[\\]["](.+)[\\]["]$', 'gm').exec(name)
+      if (hasEscapedName) {
+        const escapedName = hasEscapedName[1]
+        separatedNames.push(escapedName)
         continue
       }
-      separatedNames.push(...name.split(', '))
+      const namesSeparatedByCommas: string[] = name.split(', ')
+      separatedNames.push(...namesSeparatedByCommas)
     }
     return separatedNames
   }
 
-  public handleUppercasedGreeting(names: Array<string>): string {
+  public handleUppercasedNamesGreeting(names: Array<string>): string {
     let greeting = ' AND HELLO'
 
     if (names.length === 1) greeting = greeting.concat(` ${names[0]}!`)
     return greeting
   }
 
-  public handleNormalGreeting(names: Array<string>): string {
+  public handleCapitalizedNamesGreeting(names: Array<string>): string {
     let greeting = 'Hello'
     for (let i = 0; i < names.length; i++) {
       if (i === names.length - 1) { 
