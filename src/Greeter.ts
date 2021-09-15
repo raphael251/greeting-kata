@@ -1,26 +1,36 @@
 export class Greeter {
-  public handle(name: string | null | Array<string>): string {
-    if (!name) return 'Hello, my friend.'
+  public handle(names: string | null | Array<string>): string {
+    if (!names) return 'Hello, my friend.'
 
-    if (typeof name === 'string' && name === name.toUpperCase()) return `HELLO ${name}!`
+    if (typeof names === 'string' && names === names.toUpperCase()) return `HELLO ${names}!`
 
-    if (Array.isArray(name)) {
-        const hasUppercasedName = name.filter(el => el === el.toUpperCase()).length > 0
+    if (typeof names === 'string') return `Hello, ${names}.`
 
-        if (hasUppercasedName) {
-          const uppercasedNames = name.filter(el => el === el.toUpperCase())
-          const normalNames = name.filter(el => el !== el.toUpperCase())
+    if (Array.isArray(names)) {
+      names = this.separateNamesWhenTheyAreInAnUniqueString(names)
+      
+      const hasUppercasedName = names.filter(el => el === el.toUpperCase()).length > 0
 
-          const normalNamesGreeting = this.handleNormalGreeting(normalNames)
-          const uppercasedNamesGreeting = this.handleUppercasedGreeting(uppercasedNames)
-          
-          return normalNamesGreeting.concat(uppercasedNamesGreeting)
-        } else {
-          return this.handleNormalGreeting(name)
-        }
+      if (hasUppercasedName) {
+        const uppercasedNames = names.filter(el => el === el.toUpperCase())
+        const normalNames = names.filter(el => el !== el.toUpperCase())
+
+        const normalNamesGreeting = this.handleNormalGreeting(normalNames)
+        const uppercasedNamesGreeting = this.handleUppercasedGreeting(uppercasedNames)
+        
+        return normalNamesGreeting.concat(uppercasedNamesGreeting)
+      } else {
+        return this.handleNormalGreeting(names)
+      }
     }
 
-    return `Hello, ${name}.`
+    throw new Error('The system is not prepared for this greeting')
+  }
+
+  separateNamesWhenTheyAreInAnUniqueString(names: Array<string>): Array<string> {
+    const separatedNames = []
+    for (const name of names) { separatedNames.push(...name.split(', ')) }
+    return separatedNames
   }
 
   public handleUppercasedGreeting(names: Array<string>): string {
