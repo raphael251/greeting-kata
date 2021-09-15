@@ -29,7 +29,15 @@ export class Greeter {
 
   separateNamesWhenTheyAreInAnUniqueString(names: Array<string>): Array<string> {
     const separatedNames = []
-    for (const name of names) { separatedNames.push(...name.split(', ')) }
+    for (const name of names) {
+      const escapeStringRegexp = new RegExp('^[\\]["](.+)[\\]["]$', 'gm')
+      const regExpResult = escapeStringRegexp.exec(name)
+      if (regExpResult !== null) {
+        separatedNames.push(regExpResult[1])
+        continue
+      }
+      separatedNames.push(...name.split(', '))
+    }
     return separatedNames
   }
 
