@@ -5,9 +5,6 @@ export class Greeter {
     if (typeof name === 'string' && name === name.toUpperCase()) return `HELLO ${name}!`
 
     if (Array.isArray(name)) {
-      if (name.length === 2) return `Hello, ${name[0]} and ${name[1]}.`
-
-      if (name.length > 2) {
         const hasUppercasedName = name.filter(el => el === el.toUpperCase()).length > 0
 
         if (hasUppercasedName) {
@@ -21,12 +18,12 @@ export class Greeter {
         } else {
           return this.handleNormalGreeting(name)
         }
-      }
     }
 
     return `Hello, ${name}.`
   }
-  handleUppercasedGreeting(names: Array<string>): string {
+
+  public handleUppercasedGreeting(names: Array<string>): string {
     let greeting = ' AND HELLO'
 
     if (names.length === 1) greeting = greeting.concat(` ${names[0]}!`)
