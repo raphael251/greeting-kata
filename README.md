@@ -2,6 +2,8 @@
 
 This Kata was extracted from [here](https://github.com/testdouble/contributing-tests/wiki/Greeting-Kata) and I just paste it below to make it easy to understand when someone wants to clone this repo and see what i did.
 
+The purpose of this repo is just to practice some of TDD and "progressive development". I know there are still improvements to be made and test cases that are not yet covered. Maybe I i'll come back to fill them.
+
 # Running the test cases
 
 To run the test cases you just have to:
